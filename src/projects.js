@@ -27,6 +27,12 @@ import { writeToLocal, importStored } from "./storage.js";
     buildProjects();
   });
 
+  function deleteProject(id) {
+    projectsArray.splice(id, 1);
+    writeToLocal(projectsArray);
+    buildProjects();
+  }
+
   function maxLimitForContenteditableDiv(e, element, limit) {
     let allowedKeys = false;
 
@@ -65,16 +71,41 @@ import { writeToLocal, importStored } from "./storage.js";
   }
 
   function buildProjects() {
-    if (projectsArray.length > 0) {
-      while (domObjects.projectsTable.firstChild) {
-        domObjects.projectsTable.removeChild(
-          domObjects.projectsTable.lastChild
-        );
-      }
+    while (domObjects.projectsTable.firstChild) {
+      domObjects.projectsTable.removeChild(domObjects.projectsTable.lastChild);
     }
     for (let i = 0; i < projectsArray.length; i++) {
       createElement(
         domObjects.projectsTable,
+        "div",
+        `project${i}CellDiv`,
+        "projectCellDiv"
+      );
+      const projectCellDiv = domObjects[`project${i}CellDiv`];
+
+      createElement(
+        domObjects[`project${i}CellDiv`],
+        "div",
+        `project${i}Options`,
+        "projectOptions"
+      );
+      const projectOptions = domObjects[`project${i}Options`];
+
+      createElement(
+        domObjects[`project${i}Options`],
+        "a",
+        `project${i}OptionsBtn`,
+        "projectOptionsBtn"
+      );
+      const projectOptionsBtn = domObjects[`project${i}OptionsBtn`];
+      projectOptionsBtn.innerHTML = "...";
+      projectOptionsBtn.setAttribute("data-project-id", i);
+      projectOptionsBtn.addEventListener("click", function(e) {
+        deleteProject(e.target.getAttribute("data-project-id"));
+      });
+
+      createElement(
+        domObjects[`project${i}CellDiv`],
         "div",
         `project${i}`,
         "projectCell"
@@ -98,11 +129,14 @@ import { writeToLocal, importStored } from "./storage.js";
         maxLimitForContenteditableDiv(e, projectTitle, 20);
       });
       projectTitle.addEventListener("focus", (e) => {
-        e.target.style.border = `solid 1px ${projectsArray[i].color1}`;
+        e.target.setAttribute(
+          "style",
+          `border: solid 1px ${projectsArray[i].color1};
+        box-shadow: 0px 0px 4px ${projectsArray[i].color1};`
+        );
       });
-      projectTitle.addEventListener("mouseleave", (e) => e.target.blur());
       projectTitle.addEventListener("blur", (e) => {
-        e.target.style.border = "";
+        e.target.setAttribute("style", "");
         projectsArray[i].title = projectTitle.innerHTML;
         console.log(projectsArray[i].title);
         writeToLocal(projectsArray);
