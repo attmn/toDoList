@@ -2,6 +2,8 @@ import { initPagesExport, shortenStr, createElement } from "./initpages.js";
 import { writeToLocal, importStored } from "./storage.js";
 
 (function projects() {
+  document.body.firstElementChild.tabIndex = 1;
+
   const project = (title, description, color1, color2) => {
     let lists = [];
     return { title, description, color1, color2, lists };
