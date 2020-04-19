@@ -1,4 +1,5 @@
 import { initPagesExport, shortenStr, createElement } from "./initpages.js";
+import { writeToLocal } from "./storage.js";
 
 (function projects() {
   const project = (title, description, color1, color2) => {
@@ -11,7 +12,7 @@ import { initPagesExport, shortenStr, createElement } from "./initpages.js";
 
   function createProject(
     title,
-    description,
+    description = "",
     color1 = "#4DB4FF",
     color2 = color1
   ) {
@@ -26,8 +27,6 @@ import { initPagesExport, shortenStr, createElement } from "./initpages.js";
 
   function maxLimitForContenteditableDiv(e, element, limit) {
     let allowedKeys = false;
-
-    console.log(e.type);
 
     if (e.type === "keydown") {
       allowedKeys =
@@ -49,7 +48,7 @@ import { initPagesExport, shortenStr, createElement } from "./initpages.js";
     if (e.type === "paste") {
       setTimeout(function() {
         e.target.textContent = e.target.textContent.slice(0, limit);
-        element.style.background = "salmon";
+        element.style.background = "pink";
       });
     } else {
       element.style.background = "";
@@ -57,7 +56,7 @@ import { initPagesExport, shortenStr, createElement } from "./initpages.js";
 
     if (!allowedKeys && e.target.textContent.length >= limit) {
       e.preventDefault();
-      element.style.background = "salmon";
+      element.style.background = "pink";
     } else {
       element.style.background = "";
     }
@@ -67,6 +66,8 @@ import { initPagesExport, shortenStr, createElement } from "./initpages.js";
   createProject("The Steam Rooms", "DESCRIPTION", "#FF4DD8", "#C60C9D");
   createProject("Open Table", "DESCRIPTION");
   createProject("Amazon Incorporated", "DESCRIPTION");
+
+  console.log(Object.entries(projectsArray[0])[0][1]);
 
   function buildProjects() {
     if (projectsArray.length > 0) {
@@ -95,11 +96,17 @@ import { initPagesExport, shortenStr, createElement } from "./initpages.js";
       projectTitle.innerHTML = shortenStr(projectsArray[i].title, 20);
       projectTitle.setAttribute("contentEditable", "true");
       projectTitle.setAttribute("spellcheck", "false");
-      projectTitle.addEventListener("keydown", function(e) {
+      projectTitle.addEventListener("keydown", (e) => {
         maxLimitForContenteditableDiv(e, projectTitle, 20);
       });
-      projectTitle.addEventListener("paste", function(e) {
+      projectTitle.addEventListener("paste", (e) => {
         maxLimitForContenteditableDiv(e, projectTitle, 20);
+      });
+      projectTitle.addEventListener("focus", (e) => {
+        e.target.style.border = `solid 1px ${projectsArray[i].color1}`;
+      });
+      projectTitle.addEventListener("blur", (e) => {
+        e.target.style.border = "";
       });
 
       createElement(
@@ -137,6 +144,7 @@ import { initPagesExport, shortenStr, createElement } from "./initpages.js";
       const projectViewLink = domObjects[`project${i}ViewLink`];
       projectViewLink.innerHTML = "VIEW";
     }
+    writeToLocal(projectsArray);
   }
   buildProjects();
 })();
