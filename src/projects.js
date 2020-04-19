@@ -100,6 +100,7 @@ import { writeToLocal, importStored } from "./storage.js";
       projectTitle.addEventListener("focus", (e) => {
         e.target.style.border = `solid 1px ${projectsArray[i].color1}`;
       });
+      projectTitle.addEventListener("mouseleave", (e) => e.target.blur());
       projectTitle.addEventListener("blur", (e) => {
         e.target.style.border = "";
         projectsArray[i].title = projectTitle.innerHTML;
