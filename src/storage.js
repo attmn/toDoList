@@ -102,7 +102,8 @@ export function getStored(keyName) {
   return false;
 }
 
-export function importStored(keyName, array) {
+export function importStored(keyName) {
+  let array;
   let storedArray = getStored(keyName);
   if (storedArray != false) {
     array = storedArray;

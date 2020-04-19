@@ -7,7 +7,7 @@ import { writeToLocal, importStored } from "./storage.js";
     return { title, description, color1, color2, lists };
   };
 
-  const projectsArray = importStored("project", projectsArray).array.values;
+  const projectsArray = importStored("project").array.values;
   const domObjects = initPagesExport.domObjects;
 
   function createProject(
@@ -100,6 +100,9 @@ import { writeToLocal, importStored } from "./storage.js";
       });
       projectTitle.addEventListener("blur", (e) => {
         e.target.style.border = "";
+        projectsArray[i].title = projectTitle.innerHTML;
+        console.log(projectsArray[i].title);
+        writeToLocal(projectsArray);
       });
 
       createElement(
