@@ -1,13 +1,13 @@
 import { initPagesExport, shortenStr, createElement } from "./initpages.js";
-import { writeToLocal } from "./storage.js";
+import { writeToLocal, importStored } from "./storage.js";
 
 (function projects() {
   const project = (title, description, color1, color2) => {
-    return { title, description, color1, color2 };
+    let lists = [];
+    return { title, description, color1, color2, lists };
   };
 
-  const projectsArray = [];
-
+  const projectsArray = importStored("project", projectsArray).array.values;
   const domObjects = initPagesExport.domObjects;
 
   function createProject(
@@ -61,13 +61,6 @@ import { writeToLocal } from "./storage.js";
       element.style.background = "";
     }
   }
-
-  createProject("Supplyst", "DESCRIPTION", "#4DFF7E", "#0CC656");
-  createProject("The Steam Rooms", "DESCRIPTION", "#FF4DD8", "#C60C9D");
-  createProject("Open Table", "DESCRIPTION");
-  createProject("Amazon Incorporated", "DESCRIPTION");
-
-  console.log(Object.entries(projectsArray[0])[0][1]);
 
   function buildProjects() {
     if (projectsArray.length > 0) {

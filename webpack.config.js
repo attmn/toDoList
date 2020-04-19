@@ -10,6 +10,9 @@ module.exports = {
   devServer: {
     contentBase: "./dist",
   },
+  watchOptions: {
+    ignored: [/node_modules/],
+  },
   module: {
     rules: [
       {

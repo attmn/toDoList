@@ -1,3 +1,5 @@
+import { projectsStorageObject } from "./projects.js";
+
 //Check if storage is available
 function storageAvailable(type) {
   var storage;
@@ -54,31 +56,58 @@ let data = {
 };
 
 //Save to localstorage
-/* export function writeToLocal(array) {
+/*export function writeToLocal(array) {
   if (storageAvailable("localStorage")) {
     localStorage.clear();
     for (let i = 0; i < array.length; i++) {
-      for (let i = 0; i < Object.entries(array[i]).length; i++) {
-        let key = Objects.entries(array[i])[i][0];
-        let value = Object.entries(array[i][i][1]);
-        data.set(key, value);
+      //Number of projects in total
+      for (let index = 0; index < Object.entries(array[i]).length; index++) {
+        //Entries inside each object
+        let id = document.getElementById(`project${i}`).id;
+        let key = Object.entries(array[i])[index][0]; //Key
+        let value = Object.entries(array[i])[index][1]; //Value
+        data.set(id + key, value);
       }
     }
   }
 } */
 
 export function writeToLocal(array) {
-  console.log(array);
+  if (storageAvailable("localStorage")) {
+    localStorage.clear();
+    for (let i = 0; i < array.length; i++) {
+      let id = document.getElementById(`project${i}`).id;
+      let arrayObject = array[i];
+      localStorage.setItem(id, JSON.stringify(arrayObject));
+    }
+    console.log("written to local");
+  }
 }
 
-//Populates from localStorage
-export function readFromLocal() {
+export function getStored(keyName) {
   if (storageAvailable("localStorage")) {
-    for (let i = 0; i < localStorage.length / 4; i++) {
-      let title = localStorage.getItem(`project${i} title`);
-      let project = createProject(title);
-      projectsArray.push(project);
+    const entries = Object.entries(localStorage);
+    let values = [];
+
+    for (let i = 0; i < entries.length; i++) {
+      if (entries[i][0].includes(keyName)) {
+        let storedObject = localStorage.getItem(keyName + i);
+        values.push(JSON.parse(storedObject));
+      }
     }
+    console.log("retireved");
+    return { values };
   }
-  buildProjects();
+  console.log("nothing stored");
+  return false;
+}
+
+export function importStored(keyName, array) {
+  let storedArray = getStored(keyName);
+  if (storedArray != false) {
+    array = storedArray;
+  } else {
+    array = [];
+  }
+  return { array };
 }
