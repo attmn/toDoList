@@ -72,10 +72,6 @@ body {
   padding: 0 0.2em 0 0.2em;
 }
 
-.projectTitle:focus {
-  border: solid 1px blue;
-}
-
 .projectColor {
   height: 100%;
   width: 100%;
