@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500&family=Raleway:wght@200;300;400;500&display=swap");
+
 body {
   margin: 0;
   padding: 0;
+  height: 100vh;
 }
 
 #content {
   background: #f3f3f3;
+  height: 100%;
 }
 
 #topBar {
@@ -20,6 +23,8 @@ body {
 #bodyDiv {
   display: grid;
   justify-content: center;
+  background: #f3f3f3;
+  padding-bottom: 2em;
 }
 
 #addProjectBtn {
@@ -101,4 +106,10 @@ body {
 
 table {
   background: lightcoral;
+}
+
+@media only screen and (max-width: 600px) {
+  #projectsTable {
+    grid-template-columns: auto;
+  }
 }
