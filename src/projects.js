@@ -128,14 +128,7 @@ import { writeToLocal, importStored } from "./storage.js";
       projectTitle.addEventListener("paste", (e) => {
         maxLimitForContenteditableDiv(e, projectTitle, 20);
       });
-      projectTitle.addEventListener("focus", (e) => {
-        e.target.setAttribute(
-          "style",
-          `border: solid 1px ${projectsArray[i].color1};
-        box-shadow: 0px 0px 4px ${projectsArray[i].color1};`
-        );
-        console.log(e.target);
-      });
+      projectTitle.addEventListener("focus", (e) => {});
       projectTitle.addEventListener("blur", (e) => {
         e.target.setAttribute("style", "");
         projectsArray[i].title = projectTitle.innerHTML;
