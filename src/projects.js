@@ -134,6 +134,7 @@ import { writeToLocal, importStored } from "./storage.js";
           `border: solid 1px ${projectsArray[i].color1};
         box-shadow: 0px 0px 4px ${projectsArray[i].color1};`
         );
+        console.log(e.target);
       });
       projectTitle.addEventListener("blur", (e) => {
         e.target.setAttribute("style", "");
