@@ -1,5 +1,6 @@
 import { initPagesExport, shortenStr, createElement } from "./initpages.js";
 import { writeToLocal, importStored } from "./storage.js";
+import { createList } from "./lists.js";
 
 (function projects() {
   document.body.firstElementChild.tabIndex = 1;
@@ -32,6 +33,8 @@ import { writeToLocal, importStored } from "./storage.js";
     writeToLocal(projectsArray);
     buildProjects();
   }
+
+  // createList(projectsArray[0].lists, "Homework");
 
   function maxLimitForContenteditableDiv(e, element, limit) {
     let allowedKeys = false;
@@ -84,7 +87,7 @@ import { writeToLocal, importStored } from "./storage.js";
       const projectCellDiv = domObjects[`project${i}CellDiv`];
 
       createElement(
-        domObjects[`project${i}CellDiv`],
+        projectCellDiv,
         "div",
         `project${i}Options`,
         "projectOptions"
@@ -92,7 +95,7 @@ import { writeToLocal, importStored } from "./storage.js";
       const projectOptions = domObjects[`project${i}Options`];
 
       createElement(
-        domObjects[`project${i}Options`],
+        projectOptions,
         "a",
         `project${i}OptionsBtn`,
         "projectOptionsBtn"
@@ -104,20 +107,12 @@ import { writeToLocal, importStored } from "./storage.js";
         deleteProject(e.target.getAttribute("data-project-id"));
       });
 
-      createElement(
-        domObjects[`project${i}CellDiv`],
-        "div",
-        `project${i}`,
-        "projectCell"
-      );
-      const projectCell = domObjects[`project${i}Cell`];
+      //Project div
+      createElement(projectCellDiv, "div", `project${i}`, "projectCell");
+      const project = domObjects[`project${i}`];
 
-      createElement(
-        domObjects[`project${i}`],
-        "span",
-        `project${i}Title`,
-        "projectTitle"
-      );
+      //Project element
+      createElement(project, "h2", `project${i}Title`, "projectTitle");
       const projectTitle = domObjects[`project${i}Title`];
       projectTitle.innerHTML = shortenStr(projectsArray[i].title, 20);
       projectTitle.setAttribute("contentEditable", "true");
@@ -142,34 +137,66 @@ import { writeToLocal, importStored } from "./storage.js";
         writeToLocal(projectsArray);
       });
 
-      createElement(
-        domObjects[`project${i}`],
-        "div",
-        `project${i}Color`,
-        "projectColor"
-      );
+      createElement(project, "div", `project${i}Color`, "projectColor");
       const projectColor = domObjects[`project${i}Color`];
       projectColor.style.background = `linear-gradient(232.33deg, ${projectsArray[i].color1} 0%, ${projectsArray[i].color2} 100.01%)`;
 
       createElement(
-        domObjects[`project${i}`],
-        "div",
-        `project${i}Lists`,
-        "projectLists"
+        project,
+        "h3",
+        `project${i}ListHeading`,
+        "projectListHeading"
       );
+      const projectListHeading = domObjects[`project${i}ListHeading`];
+      projectListHeading.innerHTML = "LISTS";
 
-      const projectLists = domObjects[`project${i}Lists`];
+      createElement(project, "div", `project${i}ListsDiv`, "projectListsDiv");
+      const projectListsDiv = domObjects[`project${i}ListsDiv`];
 
-      createElement(
-        domObjects[`project${i}`],
-        "div",
-        `project${i}ViewDiv`,
-        "projectViewDiv"
-      );
+      console.log(projectsArray[i]);
+      if (projectsArray[i].lists.length > 0) {
+        for (let index = 0; index < 4; index++) {
+          createElement(
+            projectListsDiv,
+            "div",
+            `project${i}List${index}Box`,
+            "projectListBox"
+          );
+          const projectListBox = domObjects[`project${i}List${index}Box`];
+
+          createElement(
+            projectListBox,
+            "p",
+            `project${i}List${index}`,
+            "projectList"
+          );
+          const projectList = domObjects[`project${i}List${index}`];
+          projectList.innerHTML = projectsArray[i].lists[index].title;
+        }
+      } else {
+        createElement(
+          projectListsDiv,
+          "div",
+          `project${i}NoListBox`,
+          "projectListBox"
+        );
+        const projectNoListBox = domObjects[`project${i}NoListBox`];
+
+        createElement(
+          projectNoListBox,
+          "p",
+          `project${i}NoList`,
+          "projectNoList"
+        );
+        const projectNoList = domObjects[`project${i}NoList`];
+        projectNoList.innerHTML = "View project to add new list";
+      }
+
+      createElement(project, "div", `project${i}ViewDiv`, "projectViewDiv");
       const projectViewDiv = domObjects[`project${i}ViewDiv`];
 
       createElement(
-        domObjects[`project${i}ViewDiv`],
+        projectViewDiv,
         "a",
         `project${i}ViewLink`,
         "projectViewLink"
