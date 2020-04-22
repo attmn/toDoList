@@ -1,5 +1,3 @@
-import { projectsStorageObject } from "./projects.js";
-
 //Check if storage is available
 function storageAvailable(type) {
   var storage;
@@ -80,25 +78,25 @@ export function writeToLocal(array) {
       let arrayObject = array[i];
       localStorage.setItem(id, JSON.stringify(arrayObject));
     }
-    console.log("written to local");
   }
 }
 
-export function getStored(keyName) {
+function getStored(keyName) {
   if (storageAvailable("localStorage")) {
     const entries = Object.entries(localStorage);
     let values = [];
-
+    let validEntries = [];
     for (let i = 0; i < entries.length; i++) {
       if (entries[i][0].includes(keyName)) {
-        let storedObject = localStorage.getItem(keyName + i);
-        values.push(JSON.parse(storedObject));
+        validEntries.push(entries[i][0]);
       }
     }
-    console.log("retireved");
+    for (let index = 0; index < validEntries.length; index++) {
+      let storedObject = localStorage.getItem(keyName + index);
+      values.push(JSON.parse(storedObject));
+    }
     return { values };
   }
-  console.log("nothing stored");
   return false;
 }
 

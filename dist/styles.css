@@ -18,10 +18,10 @@ button:focus,
 div:focus {
   outline: none;
 }
-`
+
 /* BODY */
-#content {
-}
+/* #content {
+} */
 
 #bodyDiv {
   display: grid;

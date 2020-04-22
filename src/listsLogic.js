@@ -9,7 +9,6 @@ const list = (title, color1, color2) => {
 };
 
 const domObjects = initPagesExport.domObjects;
-const projectsArray = importStored("project").array.values;
 
 export function createList(
   parentProject,
