@@ -79,7 +79,6 @@ a {
   height: calc(100vh - 3.5em);
   justify-content: center;
   align-items: start;
-  padding-bottom: 2em;
 }
 
 /* TOP BAR */
@@ -103,12 +102,12 @@ a {
   display: grid;
   grid-template-columns: auto;
   grid-column-gap: 3em;
-  grid-row-gap: 4em;
 }
 
 .projectCellDiv {
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
   display: grid;
+  padding-bottom: 4em;
 }
 
 .projectCell {
