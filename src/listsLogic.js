@@ -24,6 +24,10 @@ export function createList(
 export function listsLogic(currentProject, projectsArray) {
   const domObjects = initPagesExport.domObjects;
   const listsArray = currentProject.lists;
+  window.addEventListener("wheel", function(e) {
+    if (e.deltaY > 0) domObjects.listsTable.scrollLeft += 100;
+    else domObjects.listsTable.scrollLeft -= 100;
+  });
 
   function buildListsLogic() {
     for (let i = 0; i < listsArray.length; i++) {
