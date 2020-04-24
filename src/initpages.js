@@ -66,24 +66,12 @@ export function maxLimitForContenteditableDiv(e, element, limit) {
   }
 }
 
-function createProjectsPage() {
-  createElement(domObjects.topBar, "button", "addProjectBtn", "addBtn", "+");
-  createElement(domObjects.bodyDiv, "div", "projectsBody");
-  createElement(
-    domObjects.projectsBody,
-    "h1",
-    "projectsTitle",
-    "pageTitle",
-    "PROJECTS"
-  );
-  createElement(domObjects.projectsBody, "div", "projectsTable");
-}
-
-function initPages() {
-  createProjectsPage();
+export function clearPage(pageName) {
+  let pageNameMid = pageName[0].toUpperCase() + pageName.slice(1).toLowerCase();
+  domObjects[`add${pageNameMid}Btn`].remove();
+  domObjects[`${pageName}sBody`].remove();
 }
 
 export const initPagesExport = {
-  create: initPages(),
   domObjects: domObjects,
 };

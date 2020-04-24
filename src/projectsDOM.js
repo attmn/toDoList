@@ -1,12 +1,30 @@
 import { initPagesExport, shortenStr, createElement } from "./initpages.js";
 
+(function staticBuildProjects() {
+  const domObjects = initPagesExport.domObjects;
+
+  createElement(domObjects.topBar, "button", "addProjectBtn", "addBtn", "+");
+
+  createElement(domObjects.bodyDiv, "div", "projectsBody");
+  createElement(
+    domObjects.projectsBody,
+    "h1",
+    "projectsPageTitle",
+    "pageTitle",
+    "PROJECTS"
+  );
+  createElement(domObjects.projectsBody, "div", "projectsTable");
+})();
+
 export function buildProjects(projectsArray) {
   document.body.firstElementChild.tabIndex = 1;
 
   const domObjects = initPagesExport.domObjects;
+
   while (domObjects.projectsTable.firstChild) {
     domObjects.projectsTable.removeChild(domObjects.projectsTable.lastChild);
   }
+
   for (let i = 0; i < projectsArray.length; i++) {
     createElement(
       domObjects.projectsTable,
@@ -16,20 +34,10 @@ export function buildProjects(projectsArray) {
     );
     const projectCellDiv = domObjects[`project${i}CellDiv`];
 
-    createElement(
-      projectCellDiv,
-      "div",
-      `project${i}Options`,
-      "projectOptions"
-    );
+    createElement(projectCellDiv, "div", `project${i}Options`, "options");
     const projectOptions = domObjects[`project${i}Options`];
 
-    createElement(
-      projectOptions,
-      "a",
-      `project${i}OptionsBtn`,
-      "projectOptionsBtn"
-    );
+    createElement(projectOptions, "a", `project${i}OptionsBtn`, "optionsBtn");
     const projectOptionsBtn = domObjects[`project${i}OptionsBtn`];
     projectOptionsBtn.innerHTML = "...";
     projectOptionsBtn.setAttribute("data-project-id", i);
@@ -62,7 +70,13 @@ export function buildProjects(projectsArray) {
     const projectListsDiv = domObjects[`project${i}ListsDiv`];
 
     if (projectsArray[i].lists.length > 0) {
-      for (let index = 0; index < 4; index++) {
+      let listsInProject;
+      if (projectsArray[i].lists.length < 4) {
+        listsInProject = projectsArray[i].lists.length;
+      } else {
+        listsInProject = 4;
+      }
+      for (let index = 0; index < listsInProject; index++) {
         createElement(
           projectListsDiv,
           "div",

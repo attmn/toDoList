@@ -74,7 +74,7 @@ export function writeToLocal(array) {
   if (storageAvailable("localStorage")) {
     localStorage.clear();
     for (let i = 0; i < array.length; i++) {
-      let id = document.getElementById(`project${i}`).id;
+      let id = `project${i}`;
       let arrayObject = array[i];
       localStorage.setItem(id, JSON.stringify(arrayObject));
     }

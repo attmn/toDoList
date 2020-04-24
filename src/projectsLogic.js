@@ -1,10 +1,16 @@
-import { initPagesExport, maxLimitForContenteditableDiv } from "./initpages.js";
+import {
+  clearPage,
+  initPagesExport,
+  maxLimitForContenteditableDiv,
+} from "./initpages.js";
 import { writeToLocal, importStored } from "./storage.js";
 import { buildProjects } from "./projectsDOM.js";
-import { createList } from "./listsLogic.js";
+import { createList, listsLogic } from "./listsLogic.js";
+import { buildLists } from "./listsDOM.js";
 
 (function projectsLogic() {
   const projectsArray = importStored("project").array.values;
+
   document.body.firstElementChild.tabIndex = 1;
 
   const project = (title, description, color1, color2) => {
@@ -24,13 +30,6 @@ import { createList } from "./listsLogic.js";
     projectsArray.unshift(projName);
   }
 
-  domObjects.addProjectBtn.addEventListener("click", function() {
-    createProject("New Project", "");
-    buildProjects(projectsArray);
-    buildProjectsLogic();
-    writeToLocal(projectsArray);
-  });
-
   function deleteProject(id) {
     projectsArray.splice(id, 1);
     buildProjects(projectsArray);
@@ -43,7 +42,6 @@ import { createList } from "./listsLogic.js";
       const projectOptionsBtn = document.getElementById(
         `project${i}OptionsBtn`
       );
-
       projectOptionsBtn.addEventListener("click", (e) => {
         console.log(e);
         deleteProject(e.target.getAttribute("data-project-id"));
@@ -68,8 +66,24 @@ import { createList } from "./listsLogic.js";
         projectsArray[i].title = projectTitle.innerHTML;
         writeToLocal(projectsArray);
       });
+
+      const projectView = domObjects[`project${i}ViewLink`];
+      projectView.addEventListener("click", (e) => {
+        clearPage("project");
+        buildLists(projectsArray[i]);
+        listsLogic(projectsArray[i], projectsArray);
+      });
     }
   }
   buildProjects(projectsArray);
   buildProjectsLogic();
+
+  (function addProjectBtn() {
+    domObjects.addProjectBtn.addEventListener("click", function() {
+      createProject("New Project", "");
+      buildProjects(projectsArray);
+      buildProjectsLogic();
+      writeToLocal(projectsArray);
+    });
+  })();
 })();
