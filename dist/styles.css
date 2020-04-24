@@ -209,7 +209,7 @@ a {
 
 #listsTable {
   height: 100%;
-  width: 100%;
+  width: 320px;
   padding-left: 2em;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -302,19 +302,6 @@ a {
   font-size: 0.8em;
   line-height: 1.1em;
   color: #9c9c9c;
-}
-
-.wrapper {
-  height: 100px;
-  width: 320px; /* arbitary for demo only */
-  white-space: nowrap;
-  overflow-y: hidden;
-  overflow-x: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-.internal {
-  display: inline;
 }
 
 @media only screen and (min-width: 600px) {
