@@ -194,7 +194,7 @@ a {
 /* LISTS PAGE */
 #listsPageTitle {
   text-decoration: none;
-  color: #404040;
+  color: #a72020;
 }
 
 #listsBody {
@@ -209,11 +209,12 @@ a {
 
 #listsTable {
   height: 100%;
-  width: 320px;
-  padding-left: 2em;
-  overflow-x: scroll;
+  width: 320px; /* arbitary for demo only */
+  white-space: nowrap;
   overflow-y: hidden;
+  overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
+  padding-left: 2em;
   display: flex;
 }
 
