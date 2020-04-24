@@ -194,7 +194,7 @@ a {
 /* LISTS PAGE */
 #listsPageTitle {
   text-decoration: none;
-  color: #404040;
+  color: #ff0000;
 }
 
 #listsBody {
@@ -219,7 +219,7 @@ a {
 
 .listCellDiv {
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
-  display: inline-grid;
+  display: inline-block;
   align-self: start;
   padding: 0 2em 0 2em;
 }
