@@ -211,7 +211,7 @@ a {
   height: 100%;
   width: 100%;
   padding-left: 2em;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
   display: flex;
@@ -219,7 +219,7 @@ a {
 
 .listCellDiv {
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
-  display: grid;
+  display: inline-grid;
   align-self: start;
   padding: 0 2em 0 2em;
 }
