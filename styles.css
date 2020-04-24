@@ -194,7 +194,7 @@ a {
 /* LISTS PAGE */
 #listsPageTitle {
   text-decoration: none;
-  color: #a72020;
+  color: #404040;
 }
 
 #listsBody {
@@ -209,18 +209,17 @@ a {
 
 #listsTable {
   height: 100%;
-  width: 320px; /* arbitary for demo only */
+  width: 100%;
   white-space: nowrap;
-  overflow-y: hidden;
   overflow-x: scroll;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
-  padding-left: 2em;
   display: flex;
 }
 
 .listCellDiv {
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
-  display: inline;
+  display: inline-grid;
   align-self: start;
   padding: 0 2em 0 2em;
 }
