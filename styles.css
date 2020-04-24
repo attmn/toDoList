@@ -194,7 +194,7 @@ a {
 /* LISTS PAGE */
 #listsPageTitle {
   text-decoration: none;
-  color: #ff0000;
+  color: #404040;
 }
 
 #listsBody {
@@ -219,7 +219,7 @@ a {
 
 .listCellDiv {
   filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
-  display: inline-block;
+  display: inline;
   align-self: start;
   padding: 0 2em 0 2em;
 }
@@ -302,6 +302,19 @@ a {
   font-size: 0.8em;
   line-height: 1.1em;
   color: #9c9c9c;
+}
+
+.wrapper {
+  height: 100px;
+  width: 320px; /* arbitary for demo only */
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+.internal {
+  display: inline;
 }
 
 @media only screen and (min-width: 600px) {
