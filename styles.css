@@ -209,10 +209,10 @@ a {
 
 #listsTable {
   height: 100%;
-  width: 100%;
+  width: 360px;
   white-space: nowrap;
-  overflow-x: scroll;
   overflow-y: hidden;
+  overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
   display: flex;
 }
