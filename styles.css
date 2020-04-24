@@ -10,6 +10,7 @@ body {
 }
 
 html {
+  overflow-x: hidden;
   margin: 0;
   padding: 0;
 }
@@ -211,6 +212,8 @@ a {
   width: 100%;
   padding-left: 2em;
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   display: flex;
 }
 
