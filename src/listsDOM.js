@@ -1,6 +1,6 @@
 import { initPagesExport, shortenStr, createElement } from "./initpages.js";
 
-export function buildLists(project) {
+export function buildLists(currentProject) {
   document.body.firstElementChild.tabIndex = 1;
 
   const domObjects = initPagesExport.domObjects;
@@ -10,14 +10,14 @@ export function buildLists(project) {
   createElement(domObjects.bodyDiv, "div", "listsBody");
   createElement(domObjects.listsBody, "h1", "listsPageTitle", "pageTitle", "");
   const listsPageTitle = domObjects["listsPageTitle"];
-  listsPageTitle.outerHTML = `<h2 id="listsPageTitle" class="pageTitle"><a href="" class="pageTitle">${project.title}</a> > Lists</h2>`;
+  listsPageTitle.outerHTML = `<h2 id="listsPageTitle" class="pageTitle"><a href="" class="pageTitle">${currentProject.title}</a> > Lists</h2>`;
 
   createElement(domObjects.listsBody, "div", "listsTable");
 
   while (domObjects.listsTable.firstChild) {
     domObjects.listsTable.removeChild(domObjects.listsTable.lastChild);
   }
-  for (let i = 0; i < project.lists.length; i++) {
+  for (let i = 0; i < currentProject.lists.length; i++) {
     createElement(
       domObjects.listsTable,
       "div",
@@ -41,13 +41,13 @@ export function buildLists(project) {
     //Project element
     createElement(list, "h2", `list${i}Title`, "listTitle");
     const listTitle = domObjects[`list${i}Title`];
-    listTitle.innerHTML = shortenStr(project.lists[i].title, 20);
+    listTitle.innerHTML = shortenStr(currentProject.lists[i].title, 20);
     listTitle.setAttribute("contentEditable", "true");
     listTitle.setAttribute("spellcheck", "false");
 
     createElement(list, "div", `list${i}Color`, "listColor");
     const listColor = domObjects[`list${i}Color`];
-    listColor.style.background = `linear-gradient(232.33deg, ${project.lists[i].color1} 0%, ${project.lists[i].color2} 100.01%)`;
+    listColor.style.background = `linear-gradient(232.33deg, ${currentProject.lists[i].color1} 0%, ${currentProject.lists[i].color2} 100.01%)`;
 
     createElement(list, "h3", `list${i}ListHeading`, "listListHeading");
     const listListHeading = domObjects[`list${i}ListHeading`];
@@ -56,7 +56,7 @@ export function buildLists(project) {
     createElement(list, "div", `list${i}ItemsDiv`, "listItemsDiv");
     const listItemsDiv = domObjects[`list${i}ItemsDiv`];
 
-    if (project.lists[i].items.length > 0) {
+    if (currentProject.lists[i].items.length > 0) {
       for (let index = 0; index < 4; index++) {
         createElement(
           listItemsDiv,
@@ -68,7 +68,7 @@ export function buildLists(project) {
 
         createElement(listItemBox, "p", `list${i}Item${index}`, "listItem");
         const listItem = domObjects[`list${i}Item${index}`];
-        listItem.innerHTML = project.lists[i].items[index].title;
+        listItem.innerHTML = currentProject.lists[i].items[index].title;
       }
     } else {
       createElement(listItemsDiv, "div", `list${i}NoItemBox`, "listItemBox");

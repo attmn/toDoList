@@ -1,6 +1,6 @@
 import { initPagesExport, shortenStr, createElement } from "./initpages.js";
 
-(function staticBuildProjects() {
+export function staticBuildProjects() {
   const domObjects = initPagesExport.domObjects;
 
   createElement(domObjects.topBar, "button", "addProjectBtn", "addBtn", "+");
@@ -14,7 +14,7 @@ import { initPagesExport, shortenStr, createElement } from "./initpages.js";
     "PROJECTS"
   );
   createElement(domObjects.projectsBody, "div", "projectsTable");
-})();
+}
 
 export function buildProjects(projectsArray) {
   document.body.firstElementChild.tabIndex = 1;

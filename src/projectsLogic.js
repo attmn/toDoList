@@ -1,4 +1,5 @@
 import {
+  changeURL,
   clearPage,
   initPagesExport,
   maxLimitForContenteditableDiv,
@@ -8,7 +9,7 @@ import { buildProjects } from "./projectsDOM.js";
 import { createList, listsLogic } from "./listsLogic.js";
 import { buildLists } from "./listsDOM.js";
 
-(function projectsLogic() {
+export function projectsLogic() {
   const projectsArray = importStored("project").array.values;
 
   document.body.firstElementChild.tabIndex = 1;
@@ -43,7 +44,6 @@ import { buildLists } from "./listsDOM.js";
         `project${i}OptionsBtn`
       );
       projectOptionsBtn.addEventListener("click", (e) => {
-        console.log(e);
         deleteProject(e.target.getAttribute("data-project-id"));
       });
 
@@ -69,9 +69,7 @@ import { buildLists } from "./listsDOM.js";
 
       const projectView = domObjects[`project${i}ViewLink`];
       projectView.addEventListener("click", (e) => {
-        clearPage("project");
-        buildLists(projectsArray[i]);
-        listsLogic(projectsArray[i], projectsArray);
+        changeURL(`project${i}`);
       });
     }
   }
@@ -86,4 +84,4 @@ import { buildLists } from "./listsDOM.js";
       writeToLocal(projectsArray);
     });
   })();
-})();
+}

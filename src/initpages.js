@@ -32,6 +32,11 @@ export function createElement(
 export function maxLimitForContenteditableDiv(e, element, limit) {
   let allowedKeys = false;
 
+  if (e.keyCode == 13) {
+    e.preventDefault();
+    e.target.blur();
+  }
+
   if (e.type === "keydown") {
     allowedKeys =
       e.which === 8 /* BACKSPACE */ ||
@@ -66,10 +71,18 @@ export function maxLimitForContenteditableDiv(e, element, limit) {
   }
 }
 
+export function changeURL(pageName) {
+  window.location.hash = encodeURI(pageName);
+}
+
 export function clearPage(pageName) {
   let pageNameMid = pageName[0].toUpperCase() + pageName.slice(1).toLowerCase();
-  domObjects[`add${pageNameMid}Btn`].remove();
-  domObjects[`${pageName}sBody`].remove();
+  if (domObjects[`add${pageNameMid}Btn`]) {
+    domObjects[`add${pageNameMid}Btn`].remove();
+  }
+  if (domObjects[`${pageName}sBody`]) {
+    domObjects[`${pageName}sBody`].remove();
+  }
 }
 
 export const initPagesExport = {
