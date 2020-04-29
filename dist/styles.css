@@ -19,6 +19,10 @@ html {
   box-sizing: border-box;
 }
 
+[draggable] {
+  user-select: none;
+}
+
 [contenteditable="true"]:focus,
 input:focus,
 select:focus,
@@ -67,6 +71,15 @@ a {
   text-align: center;
   line-height: 50%;
   color: #9c9c9c;
+}
+
+input {
+  width: 100%;
+  padding: 0.5em;
+  margin: 0.3em 0 1em 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
 }
 
 /* BODY */
@@ -241,7 +254,13 @@ a {
   padding: 0 0.2em 0 0.2em;
 }
 
-.listListHeading {
+.listHeadingDiv {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto;
+}
+
+.listHeading {
   color: #9c9c9c;
   margin: 0 0 0 0.9em;
   align-self: end;
@@ -255,52 +274,88 @@ a {
   width: 100%;
 }
 
-.listListsDiv {
+.itemsDiv {
   width: 100%;
   align-self: baseline;
-  margin-bottom: 1em;
+  padding: 0;
+  margin: 0;
 
   display: grid;
   grid-row-gap: 0.5em;
   align-items: center;
 }
 
-.listListBox {
+.itemBox {
   background: #f3f3f3;
   height: 2.8em;
   margin: 0 1em 0 1em;
   display: grid;
   align-items: center;
+  grid-template-columns: 2em auto;
 }
 
-.listItem,
+.itemCheckbox {
+  margin: 0;
+}
+
+.item,
 .listNoItem {
   font-family: "Manrope", sans-serif;
-  margin: 0;
-  padding: 0 0.5em 0 0.5em;
+  margin: 0 0.5em 0 0;
+  padding: 0;
+}
+
+.completedItem {
+  text-decoration: line-through;
 }
 
 .listNoItem {
   text-align: center;
   color: #9c9c9c;
+  grid-column: 2;
+  margin-left: -2em;
+  background: none;
 }
 
-.listViewDiv {
+/* ITEMS */
+.newItemDiv {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(71, 78, 93, 0.5);
+  padding-top: 50px;
+}
+
+.itemForm {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.newItemContainer {
+  padding: 16px;
+}
+
+.addItemBtn {
   height: 100%;
-  width: 100%;
-  background: #f9f9f9;
-  display: grid;
+  border: none;
+  background: none;
+  margin: 0 0.2em 0 0;
+  font-size: 1.5em;
+  justify-self: right;
+  grid-column: 2;
+  line-height: 0;
   cursor: pointer;
 }
 
-.listViewLink {
-  text-align: center;
-  align-self: center;
-
-  font-family: "Manrope", sans-serif;
-  font-size: 0.8em;
-  line-height: 1.1em;
-  color: #9c9c9c;
+.itemParent {
+  display: none;
 }
 
 @media only screen and (min-width: 600px) {
@@ -319,7 +374,7 @@ a {
     grid-column-gap: 5em;
   }
   #listsTable {
-    width: 768px;
+    width: 100%;
   }
 }
 

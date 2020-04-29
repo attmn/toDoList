@@ -8,6 +8,59 @@ export function buildLists(currentProject) {
   createElement(domObjects.topBar, "button", "addListBtn", "addBtn", "+");
 
   createElement(domObjects.bodyDiv, "div", "listsBody");
+
+  createElement(domObjects.listsBody, "div", "newItemDiv", "newItemDiv");
+  const newItemDiv = domObjects["newItemDiv"];
+  createElement(newItemDiv, "form", "newItemForm", "itemForm");
+  const newItemForm = domObjects["newItemForm"];
+  createElement(newItemForm, "div", "newItemContainer", "newItemContainer");
+  const newItemContainer = domObjects["newItemContainer"];
+
+  createElement(
+    newItemContainer,
+    "label",
+    "itemTitleLabel",
+    "itemFormLabel",
+    "Title"
+  );
+  const itemTitleLabel = domObjects["itemTitleLabel"];
+  itemTitleLabel.setAttribute("for", "title");
+  createElement(newItemContainer, "input", "itemTitleInput", "itemFormInput");
+  const itemTitleInput = domObjects["itemTitleInput"];
+  itemTitleInput.setAttribute("type", "text");
+  itemTitleInput.setAttribute("required", "");
+
+  createElement(
+    newItemContainer,
+    "label",
+    "itemDescLabel",
+    "itemFormLabel",
+    "Description"
+  );
+  const itemDescLabel = domObjects["itemDescLabel"];
+  itemDescLabel.setAttribute("for", "desc");
+  createElement(newItemContainer, "input", "itemDescInput", "itemDescInput");
+  const itemDescInput = domObjects["itemDescInput"];
+  itemDescInput.setAttribute("type", "text");
+
+  createElement(
+    newItemContainer,
+    "label",
+    "itemDateLabel",
+    "itemFormLabel",
+    "Due Date"
+  );
+  const itemDateLabel = domObjects["itemDateLabel"];
+  itemDateLabel.setAttribute("for", "date");
+  createElement(newItemContainer, "input", "itemDateInput", "itemDateInput");
+  const itemDateInput = domObjects["itemDateInput"];
+  itemDateInput.setAttribute("type", "date");
+
+  createElement(newItemContainer, "input", "newItemSubmit", "submit");
+  const newItemSubmit = domObjects["newItemSubmit"];
+  newItemSubmit.setAttribute("type", "submit");
+  newItemSubmit.setAttribute("value", "Add Item to List");
+
   createElement(domObjects.listsBody, "h1", "listsPageTitle", "pageTitle", "");
   const listsPageTitle = domObjects["listsPageTitle"];
   listsPageTitle.outerHTML = `<h2 id="listsPageTitle" class="pageTitle"><a href="" class="pageTitle">${currentProject.title}</a> > Lists</h2>`;
@@ -49,34 +102,52 @@ export function buildLists(currentProject) {
     const listColor = domObjects[`list${i}Color`];
     listColor.style.background = `linear-gradient(232.33deg, ${currentProject.lists[i].color1} 0%, ${currentProject.lists[i].color2} 100.01%)`;
 
-    createElement(list, "h3", `list${i}ListHeading`, "listListHeading");
-    const listListHeading = domObjects[`list${i}ListHeading`];
-    listListHeading.innerHTML = "ITEMS";
+    createElement(list, "div", `list${i}HeadingDiv`, "listHeadingDiv");
+    const listHeadingDiv = domObjects[`list${i}HeadingDiv`];
 
-    createElement(list, "div", `list${i}ItemsDiv`, "listItemsDiv");
-    const listItemsDiv = domObjects[`list${i}ItemsDiv`];
+    createElement(listHeadingDiv, "h3", `list${i}Heading`, "listHeading");
+    const listHeading = domObjects[`list${i}Heading`];
+    listHeading.innerHTML = "ITEMS";
+
+    createElement(listHeadingDiv, "button", `addItemBtn${i}`, "addItemBtn");
+    const addItemBtn = domObjects[`addItemBtn${i}`];
+    addItemBtn.innerHTML = "+";
+
+    createElement(list, "ul", `list${i}ItemsDiv`, "itemsDiv");
+    const itemsDiv = domObjects[`list${i}ItemsDiv`];
 
     if (currentProject.lists[i].items.length > 0) {
-      for (let index = 0; index < 4; index++) {
-        createElement(
-          listItemsDiv,
-          "div",
-          `list${i}Items${index}Box`,
-          "listListBox"
-        );
-        const listItemBox = domObjects[`list${i}Item${index}Box`];
+      for (
+        let index = 0;
+        index < currentProject.lists[i].items.length;
+        index++
+      ) {
+        createElement(itemsDiv, "li", `list${i}Item${index}Box`, "itemBox");
+        const itemBox = domObjects[`list${i}Item${index}Box`];
+        itemBox.setAttribute("draggable", "true");
+        itemBox.setAttribute("data-item-id", index);
 
-        createElement(listItemBox, "p", `list${i}Item${index}`, "listItem");
-        const listItem = domObjects[`list${i}Item${index}`];
-        listItem.innerHTML = currentProject.lists[i].items[index].title;
+        createElement(
+          itemBox,
+          "input",
+          `list${i}Item${index}Checkbox`,
+          "itemCheckbox"
+        );
+        const itemCheckbox = domObjects[`list${i}Item${index}Checkbox`];
+        itemCheckbox.setAttribute("type", "checkbox");
+
+        createElement(itemBox, "p", `list${i}Item${index}`, "item");
+        const item = domObjects[`list${i}Item${index}`];
+        item.setAttribute("data-item-id", index);
+        item.innerHTML = currentProject.lists[i].items[index].title;
       }
     } else {
-      createElement(listItemsDiv, "div", `list${i}NoItemBox`, "listItemBox");
+      createElement(itemsDiv, "div", `list${i}NoItemBox`, "itemBox");
       const listNoItemBox = domObjects[`list${i}NoItemBox`];
 
-      createElement(listNoItemBox, "p", `list${i}NoItem`, "listNoItem");
+      createElement(listNoItemBox, "a", `list${i}NoItem`, "listNoItem");
       const listNoItem = domObjects[`list${i}NoItem`];
-      listNoItem.innerHTML = "Add new item";
+      listNoItem.innerHTML = "No items";
     }
   }
 }
