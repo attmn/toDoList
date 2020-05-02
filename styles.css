@@ -10,6 +10,7 @@ body {
 }
 
 html {
+  font-family: "Manrope", sans-serif;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -17,6 +18,10 @@ html {
 
 * {
   box-sizing: border-box;
+}
+
+[required] {
+  box-shadow: none;
 }
 
 [draggable] {
@@ -35,6 +40,39 @@ div:focus {
 a {
   text-decoration: none;
   color: #404040;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(120%);
+}
+
+.submit {
+  cursor: pointer;
+  font-size: 0.8em;
+}
+
+.submit:hover {
+  text-shadow: 2px 2px 5px rgb(158, 158, 158);
+  color: white;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 8s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 .addBtn {
@@ -272,6 +310,8 @@ input {
 .listColor {
   height: 100%;
   width: 100%;
+  animation: gradient 3s ease infinite;
+  background-size: 200% 200%;
 }
 
 .itemsDiv {
@@ -286,6 +326,7 @@ input {
 }
 
 .itemBox {
+  cursor: pointer;
   background: #f3f3f3;
   height: 2.8em;
   margin: 0 1em 0 1em;
@@ -303,6 +344,8 @@ input {
   font-family: "Manrope", sans-serif;
   margin: 0 0.5em 0 0;
   padding: 0;
+  height: 2.8em;
+  line-height: 2.8em;
 }
 
 .completedItem {
@@ -315,9 +358,35 @@ input {
   grid-column: 2;
   margin-left: -2em;
   background: none;
+  cursor: default;
 }
 
 /* ITEMS */
+.addItemBtn {
+  height: 100%;
+  border: none;
+  background: none;
+  margin: 0 0.2em 0 0;
+  font-size: 1.5em;
+  justify-self: right;
+  grid-column: 2;
+  line-height: 0;
+  cursor: pointer;
+}
+
+#deleteItemBtn {
+  color: #bfbfbf;
+  cursor: pointer;
+  display: none;
+  justify-self: right;
+  border: none;
+  background: none;
+}
+
+#deleteItemBtn:hover {
+  color: #840303;
+}
+
 .newItemDiv {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
@@ -338,24 +407,17 @@ input {
   width: 80%;
 }
 
-.newItemContainer {
-  padding: 16px;
-}
-
-.addItemBtn {
-  height: 100%;
-  border: none;
-  background: none;
-  margin: 0 0.2em 0 0;
-  font-size: 1.5em;
-  justify-self: right;
-  grid-column: 2;
-  line-height: 0;
-  cursor: pointer;
-}
-
-.itemParent {
+#newItemSubmit {
   display: none;
+}
+
+#editItemSubmit {
+  display: none;
+}
+
+.newItemContainer {
+  display: grid;
+  padding: 16px;
 }
 
 @media only screen and (min-width: 600px) {
@@ -376,6 +438,10 @@ input {
   #listsTable {
     width: 100%;
   }
+
+  .itemForm {
+    width: 50%;
+  }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -386,10 +452,17 @@ input {
   #listsTable {
     width: 100%;
   }
+
+  .itemForm {
+    width: 40%;
+  }
 }
 
 @media only screen and (min-width: 1550px) {
   #projectsTable {
     grid-template-columns: auto auto auto auto;
+  }
+  .itemForm {
+    width: 30%;
   }
 }
