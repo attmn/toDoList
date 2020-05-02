@@ -9,12 +9,17 @@ export function buildLists(currentProject) {
 
   createElement(domObjects.bodyDiv, "div", "listsBody");
 
+  //NEW/EDIT ITEM FORM
   createElement(domObjects.listsBody, "div", "newItemDiv", "newItemDiv");
   const newItemDiv = domObjects["newItemDiv"];
   createElement(newItemDiv, "form", "newItemForm", "itemForm");
   const newItemForm = domObjects["newItemForm"];
   createElement(newItemForm, "div", "newItemContainer", "newItemContainer");
   const newItemContainer = domObjects["newItemContainer"];
+
+  createElement(newItemContainer, "i", "deleteItemBtn");
+  const deleteItemBtn = domObjects["deleteItemBtn"];
+  deleteItemBtn.setAttribute("class", "fas fa-trash-alt");
 
   createElement(
     newItemContainer,
@@ -25,6 +30,8 @@ export function buildLists(currentProject) {
   );
   const itemTitleLabel = domObjects["itemTitleLabel"];
   itemTitleLabel.setAttribute("for", "title");
+
+  //NEW ITEM
   createElement(newItemContainer, "input", "itemTitleInput", "itemFormInput");
   const itemTitleInput = domObjects["itemTitleInput"];
   itemTitleInput.setAttribute("type", "text");
@@ -60,6 +67,12 @@ export function buildLists(currentProject) {
   const newItemSubmit = domObjects["newItemSubmit"];
   newItemSubmit.setAttribute("type", "submit");
   newItemSubmit.setAttribute("value", "Add Item to List");
+
+  createElement(newItemContainer, "input", "editItemSubmit", "submit");
+  const editItemSubmit = domObjects["editItemSubmit"];
+  editItemSubmit.setAttribute("type", "submit");
+  editItemSubmit.setAttribute("value", "Save item");
+  // NEW/EDIT ITEM FORM END
 
   createElement(domObjects.listsBody, "h1", "listsPageTitle", "pageTitle", "");
   const listsPageTitle = domObjects["listsPageTitle"];

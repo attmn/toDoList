@@ -41,14 +41,21 @@ export function listsLogic(currentProject, projectsArray) {
   });
 
   window.onclick = function(event) {
-    if (event.target == domObjects["droppedItemDiv"]) {
-      domObjects["droppedItemDiv"].style.display = "none";
+    if (event.target == domObjects["newItemDiv"]) {
+      domObjects["newItemDiv"].style.display = "none";
+      domObjects["newItemSubmit"].style.display = "none";
+      domObjects["editItemSubmit"].style.display = "none";
+      domObjects["deleteItemBtn"].style.display = "none";
+      domObjects["itemTitleInput"].value = "";
+      domObjects["itemDescInput"].value = "";
+      domObjects["itemDateInput"].value = "";
     }
   };
 
   function buildListsLogic() {
     for (let i = 0; i < listsArray.length; i++) {
       const listOptionsBtn = document.getElementById(`list${i}OptionsBtn`);
+
       listOptionsBtn.addEventListener("click", (e) => {
         deleteList(e.target.getAttribute("data-list-id"));
       });
@@ -57,9 +64,11 @@ export function listsLogic(currentProject, projectsArray) {
       listTitle.addEventListener("keydown", (e) => {
         maxLimitForContenteditableDiv(e, listTitle, 20);
       });
+
       listTitle.addEventListener("paste", (e) => {
         maxLimitForContenteditableDiv(e, listTitle, 20);
       });
+
       listTitle.addEventListener("focus", (e) => {
         e.target.setAttribute(
           "style",
@@ -67,6 +76,7 @@ export function listsLogic(currentProject, projectsArray) {
                 box-shadow: 0px 0px 4px ${listsArray[i].color1};`
         );
       });
+
       listTitle.addEventListener("blur", (e) => {
         e.target.setAttribute("style", "");
         listsArray[i].title = listTitle.innerHTML;
@@ -75,8 +85,9 @@ export function listsLogic(currentProject, projectsArray) {
 
       const addItemBtn = domObjects[`addItemBtn${i}`];
       addItemBtn.addEventListener("click", () => {
-        submitItem(listsArray[i]);
-        domObjects["droppedItemDiv"].style.display = "block";
+        submitNewItem(listsArray[i]);
+        domObjects["newItemDiv"].style.display = "block";
+        domObjects["newItemSubmit"].style.display = "block";
       });
 
       let sourceItem;
@@ -86,6 +97,17 @@ export function listsLogic(currentProject, projectsArray) {
         const itemBox = domObjects[`list${i}Item${index}Box`];
         const itemCheckbox = domObjects[`list${i}Item${index}Checkbox`];
         const item = domObjects[`list${i}Item${index}`];
+
+        item.addEventListener("click", (e) => {
+          submitEditItem(listsArray[i], listsArray[i].items[index]);
+          domObjects["newItemDiv"].style.display = "block";
+          domObjects["deleteItemBtn"].style.display = "block";
+          domObjects["editItemSubmit"].style.display = "block";
+          domObjects["itemTitleInput"].value = listsArray[i].items[index].title;
+          domObjects["itemDescInput"].value =
+            listsArray[i].items[index].description;
+          domObjects["itemDateInput"].value = listsArray[i].items[index].date;
+        });
 
         itemBox.addEventListener("dragstart", (e) => {
           sourceItem = e.target;
@@ -105,13 +127,13 @@ export function listsLogic(currentProject, projectsArray) {
         itemBox.addEventListener("drop", (e) => {
           e.preventDefault();
           e.stopPropagation();
-          const droppedItem = JSON.parse(e.dataTransfer.getData("text/plain"));
+          const newItem = JSON.parse(e.dataTransfer.getData("text/plain"));
           const itemId = e.target.getAttribute("data-item-id");
           const sourceItemID = sourceItem.getAttribute("data-item-id");
           sourceItem.childNodes[1].innerHTML = e.target.innerHTML;
-          e.target.innerHTML = droppedItem.title;
+          e.target.innerHTML = newItem.title;
           list.items[sourceItemID] = list.items[itemId];
-          list.items[itemId] = droppedItem;
+          list.items[itemId] = newItem;
           clearPage("list");
           buildLists(currentProject);
           buildListsLogic();
@@ -142,18 +164,57 @@ export function listsLogic(currentProject, projectsArray) {
     }
   }
 
-  function submitItem(list) {
+  function submitNewItem(list) {
     const title = domObjects["itemTitleInput"];
     const description = domObjects["itemDescInput"];
     const date = domObjects["itemDateInput"];
-    const droppedItemForm = domObjects["droppedItemForm"];
-    const droppedItemSubmit = domObjects["droppedItemSubmit"];
-    droppedItemSubmit.addEventListener("click", () => {
-      document.forms["droppedItemForm"].submit();
+    const newItemForm = domObjects["newItemForm"];
+    const newItemSubmit = domObjects["newItemSubmit"];
+
+    newItemSubmit.addEventListener("click", () => {
+      document.forms["newItemForm"].submit();
     });
-    droppedItemForm.addEventListener("submit", () => {
+
+    newItemForm.addEventListener("submit", () => {
       createItem(list.items, title.value, description.value, date.value);
-      domObjects["droppedItemDiv"].style.display = "block";
+      domObjects["newItemDiv"].style.display = "none";
+      clearPage("list");
+      buildLists(currentProject);
+      buildListsLogic();
+      addListBtn();
+      writeToLocal(projectsArray);
+    });
+  }
+
+  function submitEditItem(list, item) {
+    const title = domObjects["itemTitleInput"];
+    const description = domObjects["itemDescInput"];
+    const date = domObjects["itemDateInput"];
+    const newItemForm = domObjects["newItemForm"];
+    const editItemSubmit = domObjects["editItemSubmit"];
+    const deleteItemBtn = domObjects["deleteItemBtn"];
+
+    deleteItemBtn.addEventListener("click", (e) => {
+      const itemIndex = list.items.findIndex(
+        (itemObject) => itemObject === item
+      );
+      list.items.splice(itemIndex, 1);
+      clearPage("list");
+      buildLists(currentProject);
+      buildListsLogic();
+      addListBtn();
+      writeToLocal(projectsArray);
+    });
+
+    editItemSubmit.addEventListener("click", () => {
+      document.forms["newItemForm"].submit();
+    });
+
+    newItemForm.addEventListener("submit", () => {
+      item.title = title.value;
+      item.description = description.value;
+      item.date = date.value;
+      domObjects["newItemDiv"].style.display = "none";
       clearPage("list");
       buildLists(currentProject);
       buildListsLogic();
